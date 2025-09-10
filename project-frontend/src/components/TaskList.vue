@@ -1,12 +1,10 @@
 <template>
   <div class="min-h-screen bg-gray-100 py-10">
     <div class="max-w-3xl mx-auto px-4">
-      <!-- Header -->
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
         My Tasks
       </h2>
 
-      <!-- Add Task Form -->
       <form @submit.prevent="addTask" class="flex flex-col sm:flex-row gap-4 mb-8">
         <input
           type="text"
@@ -24,7 +22,6 @@
             <notifications />
       </form>
 
-      <!-- Task List -->
       <ul class="space-y-4">
         <li
           v-for="task in tasks"
@@ -62,7 +59,6 @@
       </ul>
     </div>
 
-    <!-- Edit Task Modal -->
     <div
       v-if="editingTask"
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -101,12 +97,10 @@ import { useNotification } from '@kyvg/vue3-notification';
 export default {
   name: 'App',
   setup() {
-    // --- Tasks State ---
     const tasks = ref([]);
     const newTaskTitle = ref('');
     const editingTask = ref(null);
 
-    // --- Notifications ---
     const { notify } = useNotification();
     const showNotification = (title, text, type = 'success') => {
       notify({
@@ -117,7 +111,6 @@ export default {
       });
     };
 
-    // --- Fetch Tasks ---
     const fetchTasks = async () => {
       try {
         const res = await api.get('/tasks', {
@@ -129,7 +122,6 @@ export default {
       }
     };
 
-    // --- CRUD Functions ---
     const addTask = async () => {
       if (!newTaskTitle.value) return;
       try {
@@ -159,7 +151,6 @@ export default {
         );
         const index = tasks.value.findIndex((t) => t.id === editingTask.value.id);
         if (index !== -1) tasks.value[index] = { ...editingTask.value };
-        showNotification('Task Updated', `Task "${editingTask.value.title}" updated successfully.`);
         editingTask.value = null;
       } catch (err) {
         console.error(err);
@@ -177,13 +168,11 @@ export default {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         tasks.value = tasks.value.filter((t) => t.id !== id);
-        showNotification('Task Deleted', `Task "${taskToDelete?.title}" deleted.`);
       } catch (err) {
         console.error(err);
       }
     };
 
-    // --- Mounting ---
     onMounted(fetchTasks);
 
     return {

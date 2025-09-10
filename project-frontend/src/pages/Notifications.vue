@@ -14,7 +14,7 @@
           class="p-4 border border-gray-200 rounded-lg flex justify-between items-center hover:bg-gray-50 transition"
         >
           <div>
-            <p class="font-medium text-gray-700">{{ notif.title }}</p>
+            <p class="font-medium text-gray-700">""new Task""</p>
             <p class="text-sm text-gray-500">{{ notif.message }}</p>
           </div>
           <span class="text-xs text-gray-400">{{ notif.time }}</span>

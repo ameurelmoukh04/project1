@@ -3,14 +3,11 @@
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <span class="text-2xl font-bold text-blue-600 cursor-pointer hover:text-blue-700 transition">
-        Ameur Project
+        Project1
       </span>
     </div>
 
-    <!-- Right icons -->
-    <div class="flex items-center space-x-4">
-
-      <!-- Tasks -->
+        <div class="flex items-center space-x-2">
       <router-link
         v-if="isAuth"
         to="/dashboard"
@@ -18,18 +15,18 @@
       >
         Tasks
       </router-link>
+    </div>
 
-      <!-- Notification -->
+    <div class="flex items-center space-x-4">
       <router-link
         v-if="isAuth"
         to="/notifications"
         class="relative"
       >
-        Notification
+        Notifications
         <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
       </router-link>
 
-      <!-- Logout Button, only if authenticated -->
       <button
         v-if="isAuth"
         @click="logout"
