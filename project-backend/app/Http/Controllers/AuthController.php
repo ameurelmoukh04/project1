@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-//use App\Notifications\WelcomeUser;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -71,12 +71,21 @@ class AuthController extends Controller
         ], 200);
     }
 
-    // public function logout(Request $request){
-    //     $request->user()->currentAccessToken()->delete();
-    //     return response()->json([
-    //         'status'=>'success',
-    //         'message'=>'successfully logged out'
-    //     ],200);
-    // }
+ public function logout(Request $request)
+    {
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully logged out'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to logout, token might be invalid'
+            ], 400);
+        }
+    }
 
 }

@@ -19,4 +19,9 @@ Route::middleware('TaskMiddleware')->group(function () {
     Route::get('/tasks/{id}', [TaskController::class, 'show']);
     Route::put('/tasks/{id}', [TaskController::class, 'update']);
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+Route::post('/broadcasting/auth', function (\Illuminate\Http\Request $request) {
+    return Broadcast::auth($request);
+})->middleware('auth:api'); 
