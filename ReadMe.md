@@ -1,5 +1,8 @@
 # Projet To-Do List Full Stack
 
+## 📌 Vous Pouvez Voir Une Demonstration live Du Test Ici En Youtube.
+Lien : https://www.youtube.com/watch?v=jiC_Ik1rGo0
+
 ## 📌 Description
 
 Cette application est une **To-Do List Full Stack** développée pour le test technique.  
@@ -17,6 +20,8 @@ L’objectif pédagogique est d’apprendre à :
 - Implémenter des **design patterns** comme Repository et Service  
 
 ---
+## Important !!!
+J’ai réalisé un front-end basique pour montrer le fonctionnement de l’application, car c’est ma première expérience avec Vue.js et le temps était limité.
 
 ## 🛠️ Technologies utilisées
 
