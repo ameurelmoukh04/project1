@@ -10,38 +10,44 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
-        $request->validate( [
-            'full_name' => 'required|string|min:3',
-            'email' => 'required|string|email|unique:users',
-            'phone_number' => 'nullable|string|min:10|max:15|unique:users',
-            'address' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|url',
-            'password' => 'required|string|min:4',
-        ]);
+public function register(Request $request)
+{
+    $request->validate([
+        'full_name' => 'required|string|min:3',
+        'email' => 'required|string|email|unique:users',
+        'phone_number' => 'nullable|string|min:10|max:15|unique:users',
+        'address' => 'nullable|string|max:255',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'password' => 'required|string|min:4',
+    ]);
 
-        $user = new User();
-        $user->full_name = $request->full_name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->phone_number = $request->phone_number;
-        $user->address = $request->address;
-        $user->profile_picture = $request->profile_picture;
-        
-        
+    $path = null;
+
+    // Save user first (without profile picture)
+    $user = new User();
+    $user->full_name = $request->full_name;
+    $user->email = $request->email;
+    $user->password = Hash::make($request->password);
+    $user->phone_number = $request->phone_number;
+    $user->address = $request->address;
+    $user->save();
+
+    // Handle profile picture upload
+    if ($request->hasFile('profile_picture')) {
+        $path = $request->file('profile_picture')
+                        ->store("profiles/users/{$user->id}/profile", 'public');
+
+        // Update user with picture path
+        $user->profile_picture = $path;
         $user->save();
-
-        // Send welcome email
-        //$user->notify(new WelcomeUser());
-         
-        return response()->json([
-            'message' => 'registered Succesfully',
-            'user' => $user,
-            // 'Authorization'=> [
-            //     'type'=> 'Bearer',
-            // ]
-            ], 201);
     }
+
+    return response()->json([
+        'message' => 'Registered successfully',
+        'user' => $user,
+    ], 201);
+}
+
 
     public function login(Request $request){
         

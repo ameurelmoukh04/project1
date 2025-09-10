@@ -15,7 +15,7 @@
         >
           <div>
             <p class="font-medium text-gray-700">""new Task""</p>
-            <p class="text-sm text-gray-500">{{ notif.message }}</p>
+            <p class="text-sm text-gray-500">title : {{ notif.message }}</p>
           </div>
           <span class="text-xs text-gray-400">{{ notif.time }}</span>
           <button

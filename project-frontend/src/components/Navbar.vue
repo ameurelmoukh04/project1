@@ -6,7 +6,6 @@
         Project1
       </span>
     </div>
-
         <div class="flex items-center space-x-2">
       <router-link
         v-if="isAuth"
@@ -16,7 +15,6 @@
         Tasks
       </router-link>
     </div>
-
     <div class="flex items-center space-x-4">
       <router-link
         v-if="isAuth"

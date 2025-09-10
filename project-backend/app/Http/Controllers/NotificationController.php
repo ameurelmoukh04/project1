@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
 
 class NotificationController extends Controller
 {
+
+    protected $NotificationService;
+
+    /**
+     * Injection de dépendance du Service.
+     */
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     public function index(Request $request)
     {
-        $user = $request->user(); // or auth()->user()
-        $notifications = Notification::where('user_id', $user->id)
-                                     ->orderBy('created_at', 'desc')
-                                     ->get();
+        $user = $request->user();
+        $notifications = $this->notificationService->getUserNotifications($user->id);
 
         return response()->json([
             'notifications' => $notifications
@@ -20,12 +29,7 @@ class NotificationController extends Controller
     }
         public function destroy(string $id)
     {
-        $notification = Notification::where('id', $id)
-                    ->where('user_id', auth()->id())
-                    ->firstOrFail();
-
-        $notification->delete();
-
+        $notifications = $this->notificationService->deleteUserNotification($id, auth()->id());
         return response()->json([
             'message' => 'Notification deleted successfully'
         ]);

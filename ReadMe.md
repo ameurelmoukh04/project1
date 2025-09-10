@@ -75,12 +75,12 @@ Le **Controller** reçoit la requête HTTP, appelle les Services et retourne la 
    ```bash
    git clone https://github.com/ameurelmoukh04/project1
 
-1. **Run le Front-End :**
+2. **Run le Front-End :**
 - cd projet1-frontend
 - npm install
 - npm run dev
 
-1. **Run le Back-End :**
+3. **Run le Back-End :**
 - cd project1-backend
 - cp .env.example .env
 - composer install
@@ -88,7 +88,7 @@ Le **Controller** reçoit la requête HTTP, appelle les Services et retourne la 
 - php artisan migrate
 - php artisan serve
 
-1. **ajouter ces variables d'envirenment de Pusher :**
+4. **ajouter ces variables d'envirenment de Pusher :**
 
 BROADCAST_DRIVER=pusher
 
