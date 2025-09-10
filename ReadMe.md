@@ -35,21 +35,10 @@ J’ai réalisé un front-end basique pour montrer le fonctionnement de l’appl
 
 ## 🏗️ Architecture et Design Patterns
 
-### 🔹 Repository
-Le **Repository** est responsable de **l’accès aux données**.  
-Exemple : `TaskRepository` contient toutes les requêtes SQL ou Eloquent pour les tâches et retourne les modèles ou collections à la couche Service.
+Pour respecter les principes SOLID, j’ai utilisé :  
 
-### 🔹 Service
-Le **Service** contient **la logique métier**.  
-Exemple : `TaskService` utilise `TaskRepository` pour effectuer des actions plus complexes, comme :  
-- Ajouter une tâche pour un utilisateur spécifique  
-- Envoyer une notification après création d’une tâche  
-
-### 🔹 Controller
-Le **Controller** reçoit la requête HTTP, appelle les Services et retourne la réponse JSON au frontend.
-
-**Flux classique :**  
-`Controller → Service → Repository → DB → Service → Controller → Frontend`
+- **Repository** : pour l’accès aux données (`TaskRepository`)  
+- **Service** : pour la logique métier (`TaskService`)  
 
 ---
 
