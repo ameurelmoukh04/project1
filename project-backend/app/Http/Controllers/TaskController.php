@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
-use App\Events\TaskCreated;
 use App\Services\TaskService;
 
 class TaskController extends Controller
@@ -49,8 +48,6 @@ class TaskController extends Controller
         //     // 'status' => $request->status ?? 'pending',
         // ]);
         $task = $this->taskService->storeUserTask($user_id,$request->all());
-
-        event(new TaskCreated($task));
 
         return response()->json([
             'message' => 'Task created successfully',

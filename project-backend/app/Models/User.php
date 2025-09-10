@@ -57,7 +57,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
-
+    public function notifications(){
+        return $this->hasMany(Notification::class);
+    }
     public function getJWTCustomClaims()
     {
         return [];
