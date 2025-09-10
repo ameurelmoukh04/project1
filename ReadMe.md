@@ -95,10 +95,9 @@ Le **Controller** reçoit la requête HTTP, appelle les Services et retourne la 
 
 4. **ajouter ces variables d'envirenment de Pusher :**
 
-BROADCAST_DRIVER=pusher
-
-PUSHER_APP_ID=2048606
-PUSHER_APP_KEY=1b891a822f15667a8d89
-PUSHER_APP_SECRET=5ccadee2c5cd35d27156
-PUSHER_APP_CLUSTER=eu
+- BROADCAST_DRIVER=pusher
+- PUSHER_APP_ID=2048606
+- PUSHER_APP_KEY=1b891a822f15667a8d89
+- PUSHER_APP_SECRET=5ccadee2c5cd35d27156
+- PUSHER_APP_CLUSTER=eu
 
