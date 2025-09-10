@@ -13,17 +13,5 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('tasks')->insert([
-            'title' => 'Sample Task',
-            'user_id' => 1,
-        ]);
-        DB::table('tasks')->insert([
-            'title' => 'Important Task',
-            'user_id' => 1,
-        ]);
-        DB::table('tasks')->insert([
-            'title' => 'New Task',
-            'user_id' => 3,
-        ]);
     }
 }

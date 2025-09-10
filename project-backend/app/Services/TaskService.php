@@ -25,7 +25,7 @@ class TaskService
 
         $notification = Notification::create([
             'user_id' => $user_id,
-            'message' => 'a new task created'
+            'message' => $task->title
         ]);
                 event(new TaskCreated($task));
         return $task;
