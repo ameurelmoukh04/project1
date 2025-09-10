@@ -73,20 +73,20 @@ Le **Controller** reçoit la requête HTTP, appelle les Services et retourne la 
 
 1. **Cloner le projet :**
    ```bash
-   git clone <url-du-repo>
+   git clone https://github.com/ameurelmoukh04/project1
 
 1. **Run le Front-End :**
-cd projet1-frontend
-npm install
-npm run dev
+- cd projet1-frontend
+- npm install
+- npm run dev
 
 1. **Run le Back-End :**
-cd project1-backend
-cp .env.example .env
-composer install
-php artisan key:generate
-php artisan migrate
-php artisan serve
+- cd project1-backend
+- cp .env.example .env
+- composer install
+- php artisan key:generate
+- php artisan migrate
+- php artisan serve
 
 1. **ajouter ces variables d'envirenment de Pusher :**
 
