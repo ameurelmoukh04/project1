@@ -21,10 +21,8 @@ const userId = JSON.parse(localStorage.getItem('user'))?.id;
 if (userId) {
   window.Echo.private(`tasks.${userId}`)
     .listen("TaskCreated", (e) => {
-      console.log("📩 Event received:", e);
     })
     .subscription.bind('pusher:subscription_succeeded', () => {
-      console.log(`✅ Subscribed to tasks.${userId}`);
     });
 } else {
   console.warn("⚠️ No user ID found in localStorage");

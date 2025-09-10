@@ -57,7 +57,6 @@ export default {
             tasks.value.unshift(event.task);
           })
           .subscription.bind('pusher:subscription_succeeded', () => {
-            console.log(`✅ Subscribed to tasks.${userId}`);
           });
       }
     });

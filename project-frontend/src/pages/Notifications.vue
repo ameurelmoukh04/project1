@@ -18,7 +18,14 @@
             <p class="text-sm text-gray-500">{{ notif.message }}</p>
           </div>
           <span class="text-xs text-gray-400">{{ notif.time }}</span>
+          <button
+              @click="deleteNotif(notif.id)"
+              class="text-red-500 hover:text-red-600 font-semibold transition"
+            >
+              Delete
+            </button>
         </li>
+
       </ul>
     </div>
   </div>
@@ -27,6 +34,8 @@
 <script>
 import { ref, onMounted } from "vue";
 import axios from "axios"; // use your axios instance
+import api from '../api/axios';
+
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 
@@ -50,7 +59,18 @@ export default {
         console.error("Error fetching notifications:", err);
       }
     };
-
+    const deleteNotif = async (id) => {
+      try {
+        const notifToDelete = notifications.value.find((t) => t.id === id);
+        await api.delete(`/notifications/${id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+        notifications.value = notifications.value.filter((t) => t.id !== id);
+        //showNotification(' Deleted', `Task "${notifToDelete?.title}" deleted.`);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     // Initialize Echo + Pusher
     window.Pusher = Pusher;
     window.Echo = new Echo({
@@ -75,15 +95,13 @@ export default {
               message: e.task.title,
               time: new Date().toLocaleTimeString(),
             });
-            console.log("📌 Notification received:", e);
           })
           .subscription.bind("pusher:subscription_succeeded", () => {
-            console.log(`✅ Subscribed to tasks.${user.id}`);
           });
       }
     });
 
-    return { notifications };
+    return { notifications,deleteNotif };
   },
 };
 </script>

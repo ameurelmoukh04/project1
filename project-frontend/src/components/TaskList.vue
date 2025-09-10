@@ -17,9 +17,11 @@
         <button
           type="submit"
           class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:scale-105 transform transition"
-        >
+          
+          >
           Add Task
         </button>
+            <notifications />
       </form>
 
       <!-- Task List -->
@@ -30,12 +32,7 @@
           class="flex justify-between items-center bg-white p-4 rounded-lg shadow hover:shadow-lg transition"
         >
           <div class="flex items-center gap-3">
-            <input
-              type="checkbox"
-              v-model="task.completed"
-              @change="toggleComplete(task)"
-              class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
+
             <span
               :class="{
                 'line-through text-gray-400': task.completed,
@@ -99,19 +96,32 @@
 <script>
 import { ref, onMounted } from 'vue';
 import api from '../api/axios';
+import { useNotification } from '@kyvg/vue3-notification';
 
 export default {
+  name: 'App',
   setup() {
+    // --- Tasks State ---
     const tasks = ref([]);
     const newTaskTitle = ref('');
     const editingTask = ref(null);
 
+    // --- Notifications ---
+    const { notify } = useNotification();
+    const showNotification = (title, text, type = 'success') => {
+      notify({
+        title,
+        text,
+        type,
+        duration: 5000,
+      });
+    };
+
+    // --- Fetch Tasks ---
     const fetchTasks = async () => {
       try {
         const res = await api.get('/tasks', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         tasks.value = res.data.tasks;
       } catch (err) {
@@ -119,6 +129,7 @@ export default {
       }
     };
 
+    // --- CRUD Functions ---
     const addTask = async () => {
       if (!newTaskTitle.value) return;
       try {
@@ -128,6 +139,7 @@ export default {
           { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
         );
         tasks.value.push(res.data.task);
+        showNotification('Task Added', `Task "${res.data.task.title}" created successfully.`);
         newTaskTitle.value = '';
       } catch (err) {
         console.error(err);
@@ -147,6 +159,7 @@ export default {
         );
         const index = tasks.value.findIndex((t) => t.id === editingTask.value.id);
         if (index !== -1) tasks.value[index] = { ...editingTask.value };
+        showNotification('Task Updated', `Task "${editingTask.value.title}" updated successfully.`);
         editingTask.value = null;
       } catch (err) {
         console.error(err);
@@ -159,27 +172,18 @@ export default {
 
     const deleteTask = async (id) => {
       try {
+        const taskToDelete = tasks.value.find((t) => t.id === id);
         await api.delete(`/tasks/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         tasks.value = tasks.value.filter((t) => t.id !== id);
+        showNotification('Task Deleted', `Task "${taskToDelete?.title}" deleted.`);
       } catch (err) {
         console.error(err);
       }
     };
 
-    const toggleComplete = async (task) => {
-      try {
-        await api.put(
-          `/tasks/${task.id}`,
-          { completed: task.completed },
-          { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-        );
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
+    // --- Mounting ---
     onMounted(fetchTasks);
 
     return {
@@ -191,8 +195,9 @@ export default {
       saveTask,
       cancelEdit,
       deleteTask,
-      toggleComplete,
+      showNotification,
     };
   },
 };
 </script>
+

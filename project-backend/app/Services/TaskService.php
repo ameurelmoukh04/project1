@@ -30,4 +30,16 @@ class TaskService
                 event(new TaskCreated($task));
         return $task;
     }
+
+    public function updateUserTask($taskId, $userId, array $data)
+    {
+        $task = $this->taskRepository->findTask($taskId, $userId);
+        return $this->taskRepository->updateTask($task, $data);
+    }
+
+    public function deleteUserTask($taskId, $userId)
+    {
+        $task = $this->taskRepository->findTask($taskId, $userId);
+        return $this->taskRepository->deleteTask($task);
+    }
 }

@@ -22,6 +22,7 @@ Route::middleware('TaskMiddleware')->group(function () {
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
 });
 
 Route::post('/broadcasting/auth', function (\Illuminate\Http\Request $request) {

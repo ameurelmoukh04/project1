@@ -19,4 +19,21 @@ class TaskRepository
             // 'status' => $request->status ?? 'pending',
         ]);
     }
+    public function findTask($taskId, $userId)
+    {
+        return Task::where('id', $taskId)
+                   ->where('user_id', $userId)
+                   ->firstOrFail();
+    }
+     public function updateTask(Task $task, array $data)
+    {
+        $task->update($data);
+        return $task;
+    }
+
+    public function deleteTask(Task $task)
+    {
+        return $task->delete();
+    }
+
 }
